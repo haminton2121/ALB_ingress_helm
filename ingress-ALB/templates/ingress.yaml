@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   annotations:
     {{- with .Values.ingress.annotations }}
-    {{ toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 4 | trimSuffix "\n" }} #cat 1 dong trang
     {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.ingressClassName }}
@@ -19,4 +19,4 @@ spec:
               service:
                 name: frontend
                 port:
-                  number: {{- include "common.containerPort" . }}
+                  number: {{ include "common.containerPort" . }}

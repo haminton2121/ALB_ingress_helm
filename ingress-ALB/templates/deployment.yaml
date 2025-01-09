@@ -33,4 +33,4 @@ spec:
             value: {{ .value }}
           {{- end }}
         ports:
-        - containerPort: {{- include "common.containerPort" . }}
+          - containerPort: {{ include "common.containerPort" . }}
