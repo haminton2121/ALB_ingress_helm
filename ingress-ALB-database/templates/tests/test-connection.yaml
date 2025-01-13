@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "ingress-ALB-database.fullname" . }}-test-connection"
+  labels:
+    {{- include "ingress-ALB-database.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "ingress-ALB-database.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
