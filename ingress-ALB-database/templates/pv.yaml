@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ include "postgres.fullname" . }}-pv
+  namespace: {{ .Values.namespace }}
+spec:
+  capacity: 
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ include "PostgreSQL.hostpath" . }}   #/data/postgres Update path for PostgreSQL

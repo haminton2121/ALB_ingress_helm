@@ -1,15 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ingress-ALB-database.fullname" . }}
-  labels:
-    {{- include "ingress-ALB-database.labels" . | nindent 4 }}
+  namespace: {{ .Values.namespace }}
+  name: {{ include "postgres.fullname" . }}-svc
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "ingress-ALB-database.selectorLabels" . | nindent 4 }}
+    {{- include "postgres-deployment.selectorLabels" . | nindent 4 }}
+  ports:
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
+  type: LoadBalancer
